@@ -1,18 +1,38 @@
-Yii 2 Advanced Project Template
+Yii 2 Table Management System
 ===============================
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+Restaurant table management system, build with Yii 2 Advanced Template
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
+INSTALLATION
+-------------------
+```
+composer clear-cache
+composer self-update
+composer global require "fxp/composer-asset-plugin:~1.3"
+composer update
 
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
+php init
 
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-advanced/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-advanced/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
+php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations
+
+php yii migrate --migrationPath=@bedezign/yii2/audit/migrations
+
+php yii user/create admin@central.com admin 111111
+
+source sql;
+--
+-- Dumping data for table `setting`
+--
+
+INSERT INTO `setting` (`id`, `key`, `value`) VALUES
+(1, 'tables', '24'),
+(2, 'happy_hour_day', '12:00-15:00'),
+(3, 'happy_hour_night', '00:00-01:00'),
+(4, 'happy_hour_discount', '10'),
+(5, 'service_charge', '0'),
+(6, 'inhouse_discount', '10'),
+(7, 'happy_hour_category', '1');
+```
 
 DIRECTORY STRUCTURE
 -------------------
