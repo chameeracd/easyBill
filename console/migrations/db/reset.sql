@@ -1,0 +1,12 @@
+set foreign_key_checks=0;
+truncate table audit_data;
+truncate table audit_entry;
+truncate table audit_error;
+truncate table audit_javascript;
+truncate table audit_mail;
+truncate table audit_trail;
+#truncate table category;
+#truncate table item;
+truncate table `order`;
+truncate table order_item;
+set foreign_key_checks=1;
