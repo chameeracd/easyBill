@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'item.name',
             'rate',
             'qty',
-            'discount',
+            'hh',
              'total',
             // 'created_at',
             // 'updated_at',

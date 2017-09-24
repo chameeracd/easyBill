@@ -165,7 +165,8 @@ class OrderController extends Controller {
         $model->load(Yii::$app->request->post());
 
         if ($model->order->status == 'OPEN') {
-            $model->discount = 0;
+            $model->hh = false;
+            $rate = ($model->rate) ? $model->rate : $model->item->price;
 
             $happyHour = Setting::find()
                     ->where(['key' => 'happy_hour_discount'])
@@ -173,7 +174,8 @@ class OrderController extends Controller {
             $happyHourCat = Setting::find()
                     ->where(['key' => 'happy_hour_category'])
                     ->one();
-            if ($happyHour->value != '' && in_array($model->item->category_id, explode(',', $happyHourCat->value))) {
+
+            if ($happyHour->value == 'yes' && in_array($model->item->category_id, explode(',', $happyHourCat->value)) && !$model->rate) {
                 $happyHourDay = explode('-', Setting::find()
                                 ->where(['key' => 'happy_hour_day'])
                                 ->one()->value);
@@ -189,17 +191,14 @@ class OrderController extends Controller {
                 $nightEnd = \DateTime::createFromFormat('H:i', $happyHourNight[1]);
 
                 if (($dateNow > $dayStart && $dateNow < $dayEnd) || ($dateNow > $nightStart && $dateNow < $nightEnd)) {
-                    $key = array_search($model->item->category_id, explode(',', $happyHourCat->value));
-                    $hhDis = explode(',', $happyHour->value);
-                    $model->discount = $hhDis[$key];
+                    $rate = ($model->item->hh_price) ? $model->item->hh_price : $model->item->price;
+                    $model->hh = true;
                 }
             }
 
-            $rate = ($model->rate) ? $model->rate : $model->item->price;
-            $price = ($model->discount != 0) ? $rate - ((double) $rate * (double) $model->discount / 100) : $rate;
             $model->rate = $rate;
 
-            $model->total = $model->qty * (double) $price;
+            $model->total = $model->qty * (double) $rate;
             if ($model->save()) {
                 // Yii::$app->getSession()->setFlash('success', "'{$model->item->name}' Added to the Order '{$model->order_id}'");
                 Yii::$app->getSession()->setFlash('success', [
@@ -227,6 +226,7 @@ class OrderController extends Controller {
 
     /**
      * Lists all OrderItem models.
+     * @param $order_id order id
      * @return mixed
      */
     public function actionEdit($order_id) {
@@ -257,11 +257,25 @@ class OrderController extends Controller {
         $model = $this->findOrderItemModel($id);
         if ($model->order->status == 'OPEN') {
             if ($model->load(Yii::$app->request->post())) {
-                $rate = ($model->rate) ? $model->rate : $model->item->price;
-                $price = ($model->discount != 0) ? $rate - ((double) $rate * (double) $model->discount / 100) : $rate;
+                $rate = $model->item->price;
+                if($model->rate) {
+                    $rate = $model->rate;
+                } else {
+                    $happyHour = Setting::find()
+                        ->where(['key' => 'happy_hour_discount'])
+                        ->one();
+                    $happyHourCat = Setting::find()
+                        ->where(['key' => 'happy_hour_category'])
+                        ->one();
+                    if($model->hh && $model->item->hh_price && $happyHour->value == 'yes' && in_array($model->item->category_id, explode(',', $happyHourCat->value))) {
+                        $rate = $model->item->hh_price;
+                    } else {
+                        $model->hh = false;
+                    }
+                }
                 $model->rate = $rate;
 
-                $model->total = $model->qty * (double) $price;
+                $model->total = $model->qty * (double) $rate;
                 if ($model->save()) {
                     Yii::$app->getSession()->setFlash('success', "Item '{$model->id}' Updated in the Order '{$model->order_id}'");
                     return $this->redirect(['edit', 'order_id' => $model->order_id]);

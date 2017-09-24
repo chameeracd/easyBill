@@ -48,7 +48,7 @@ use yii\helpers\Html;
             foreach ($orderItems as $orderItem) {
                 echo '<tr>';
                 echo '<td>' . $i . '</td>';
-                $hh = ($orderItem->discount > 0) ? ' <span class="badge">H:H</span>' : '';
+                $hh = ($orderItem->hh) ? ' <span class="badge">H:H</span>' : '';
                 echo '<td>' . $orderItem->qty . '</td>';
                 echo '<td>' . $orderItem->item->name . $hh . '</td>';
     //            echo '<td class="text-right">' . $orderItem->discount . '</td>';

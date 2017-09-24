@@ -20,7 +20,7 @@ class ItemSearch extends Item
         return [
             [['id', 'category_id', 'created_at', 'updated_at'], 'integer'],
             [['name', 'description', 'category.name'], 'safe'],
-            [['price'], 'number'],
+            [['price', 'hh_price'], 'number'],
         ];
     }
 

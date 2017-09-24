@@ -23,6 +23,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'price') ?>
 
+    <?= $form->field($model, 'hh_price') ?>
+
     <?= $form->field($model, 'description') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>

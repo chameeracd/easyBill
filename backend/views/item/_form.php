@@ -20,6 +20,8 @@ use backend\models\Category;
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'hh_price')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">

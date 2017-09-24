@@ -14,7 +14,7 @@ use yii\db\ActiveRecord;
  * @property integer $item_id
  * @property string $rate
  * @property integer $qty
- * @property string $discount
+ * @property boolean $hh
  * @property string $total
  * @property integer $created_at
  * @property integer $updated_at
@@ -54,7 +54,8 @@ class OrderItem extends ActiveRecord {
         return [
             [['order_id', 'item_id', 'qty'], 'required'],
             [['order_id', 'item_id', 'qty', 'created_at', 'updated_at'], 'integer'],
-            [['discount', 'total', 'rate'], 'number']
+            [['total', 'rate'], 'number'],
+            [['hh'], 'boolean']
         ];
     }
 
@@ -68,7 +69,7 @@ class OrderItem extends ActiveRecord {
             'item_id' => Yii::t('app', 'Item ID'),
             'rate' => Yii::t('app', 'Rate'),
             'qty' => Yii::t('app', 'Qty'),
-            'discount' => Yii::t('app', 'Discount'),
+            'hh' => Yii::t('app', 'Happy Hour'),
             'total' => Yii::t('app', 'Total'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),

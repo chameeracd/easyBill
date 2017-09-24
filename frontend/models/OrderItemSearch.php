@@ -18,7 +18,8 @@ class OrderItemSearch extends OrderItem {
     public function rules() {
         return [
             [['item_id', 'qty', 'created_at', 'updated_at'], 'integer'],
-            [['discount', 'rate', 'total'], 'number'],
+            [['rate', 'total'], 'number'],
+            [['hh'], 'boolean'],
             [['item.name'], 'safe'],
         ];
     }
@@ -71,7 +72,7 @@ class OrderItemSearch extends OrderItem {
             'order_id' => $this->order_id,
             'item_id' => $this->item_id,
             'qty' => $this->qty,
-            'discount' => $this->discount,
+            'hh' => $this->hh,
             'total' => $this->total,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

@@ -13,6 +13,8 @@ composer update
 
 php init
 
+php yii migrate
+
 php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations
 
 php yii migrate --migrationPath=@bedezign/yii2/audit/migrations

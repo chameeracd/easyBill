@@ -13,6 +13,7 @@ use yii\db\ActiveRecord;
  * @property integer $category_id
  * @property string $name
  * @property string $price
+ * @property string $hh_price
  * @property string $description
  * @property integer $created_at
  * @property integer $updated_at
@@ -54,7 +55,7 @@ class Item extends ActiveRecord
         return [
             [['category_id', 'name', 'price'], 'required'],
             [['category_id', 'created_at', 'updated_at'], 'integer'],
-            [['price'], 'number'],
+            [['price', 'hh_price'], 'number'],
             [['description'], 'string'],
             [['name'], 'string', 'max' => 255]
         ];
@@ -71,6 +72,7 @@ class Item extends ActiveRecord
             'category.name' => Yii::t('app', 'Category'),
             'name' => Yii::t('app', 'Name'),
             'price' => Yii::t('app', 'Price'),
+            'hh_price' => Yii::t('app', 'Happy Hour Price'),
             'description' => Yii::t('app', 'Description'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
