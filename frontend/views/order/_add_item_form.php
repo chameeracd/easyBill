@@ -27,9 +27,9 @@ use kartik\select2\Select2;
             ],
             'options' => [
                 'placeholder' => '-- please select --',
-                'onchange' => '$("#orderitem-item_id").select2("val", "");'
+                'onchange' => '$("#order_item_' . $model->order_id . '").select2("val", "");'
                 . '$.post( "' . Url::to(['/order/category-item']) . '?id="+$(this).val(), function( data ) {
-                    $( "select#orderitem-item_id" ).html( data );
+                    $( "select#order_item_' . $model->order_id . '" ).html( data );
                 });'
             ],
         ]);
