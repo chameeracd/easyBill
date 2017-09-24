@@ -21,7 +21,11 @@ use kartik\select2\Select2;
         <?=
         Select2::widget([
             'name' => 'category_id',
-            'data' => ArrayHelper::map(Category::find()->all(), 'id', 'name'),
+            'data' => ArrayHelper::map(Category::find()->all(), 'id',
+                function($cat) {
+                    return $cat['id'] . ' : ' . $cat['name'];
+                }
+            ),
             'pluginOptions' => [
                 'allowClear' => true
             ],
@@ -40,7 +44,12 @@ use kartik\select2\Select2;
     <?= $form->field($model, 'order_id')->hiddenInput()->label(false) ?>
 
     <?=
-    $form->field($model, 'item_id')->widget(Select2::classname(), ['data' => ArrayHelper::map(Item::find()->all(), 'id', 'name'),
+    $form->field($model, 'item_id')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(Item::find()->all(), 'id',
+            function($item) {
+                return $item['id'] . ' : ' . $item['name'];
+            }
+        ),
         'options' => [
 	    'id' => 'order_item_' . $model->order_id,
             'placeholder' => '-- please select --'

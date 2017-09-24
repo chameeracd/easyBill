@@ -12,7 +12,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use kartik\mpdf\Pdf;
-use kartik\growl\Growl;
 use yii\helpers\Html;
 
 /**
@@ -156,7 +155,7 @@ class OrderController extends Controller {
         echo "<option value=''>-- please select --</option>";
         if (count($items) > 0) {
             foreach ($items as $item) {
-                echo "<option value='" . $item->id . "'>" . $item->name . "</option>";
+                echo "<option value='" . $item->id . "'>" . $item->id . " : " . $item->name . "</option>";
             }
         }
     }
